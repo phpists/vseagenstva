@@ -199,7 +199,6 @@
                                         Создание сайтов
                                     </label>
                                 </td>                               
-
                             </tr>
                             <tr>
                                 <td>
@@ -398,7 +397,7 @@
 </div>
 </div>
 <script type="text/javascript">
-// softdeal.net
+// SoftDeal.net
     $('#ajax_form').validator().on('submit', function (e) {
         if (e.isDefaultPrevented()) {
             showAlert('Заполните обезательные поля!', 'error2');
@@ -417,24 +416,20 @@
                 // var form_data = $('#ajax_form').serialize();
                 var form_data = JSON.stringify($('#ajax_form').serializeObject());
                 $.ajax({
-                    // url: 'send_form_ajax.php',
                     url: 'admin/index.php/zakaz/new_zakaz',
                     type: 'post',
                     data: {'form': form_data, 'checked': checked},
-                    //dataType : "json",          // Тип даних для відправки
-                    success: function (data) {  // свій обробник success
+                    //dataType : "json",
+                    success: function (data) {
                         //alert(data);
                         if (data == 'ok') {
                             showAlert('Спасибо за вашу заявку. Она будет отправлена в выбранные агентства по электронной почте после прохождения модерации в течение одного рабочего дня.', 'success');
                         } else {
                             showAlert('Что-то пошло не так', 'error1');
                         }
-                        setTimeout(
-                            function()
-                            {
-                                location.reload(0);
-
-                            }, 5000);
+                        setTimeout(function(){
+                            location.reload(0);
+                        }, 5000);
                     }
                 });
             } else {
@@ -451,9 +446,8 @@
         }
     }
     $(document).ready(function () {
-
-        $.fn.serializeObject = function()
-        {
+        // ф-ція серіалізації форми
+        $.fn.serializeObject = function(){
             var o = {};
             var a = this.serializeArray();
             $.each(a, function() {
@@ -492,13 +486,13 @@
             }
             var form_data   = $('#ajax_form').serialize();
             $.ajax({
-                url: 'form_ajax.php',             // URL
-                type: 'post',                       // Тип запиту
+                url: 'form_ajax.php',         // URL
+                type: 'post',                 // Тип запиту
                 data: form_data + '&radio_button_value=' + radio_button_value,
-                dataType : "json",                      // Тип даних для відправки
-                success: function (data) { // свій обробник success
+                dataType : "json",            // Тип даних для відправки
+                success: function (data) {    // свій обробник success
                     $('#data_db').after().empty();
-                    $.each(data, function (i, val) {    // обробка получених даних
+                    $.each(data, function (i, val) {    // обробка отриманих даних
                         //$('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" return false;" class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td>'+val['name']+'</td><td>'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
                         if(val['favicon']) {
                             $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'"><img src="admin/icons/'+val['favicon']+'" /> '+val['name']+'</a></td><td class="list_description">'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
