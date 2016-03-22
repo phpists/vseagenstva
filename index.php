@@ -22,6 +22,11 @@
                 $('.alert-basket').remove();
             });
         }
+        /**
+         * Функция сообщений
+         * @param message
+         * @param m_class
+         */
         function showAlert(message, m_class){
             $('<div id="alertOverlay" onclick="animateAlert();"></div>').appendTo('body');
             $('<div onclick="animateAlert();" class="alert-basket"><div class="smessage" id="' + m_class + '">' + message + '</div></div>').appendTo('body');
