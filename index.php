@@ -492,7 +492,7 @@
                 dataType : "json",            // Тип даних для відправки
                 success: function (data) {    // свій обробник success
                     $('#data_db').after().empty();
-                    $.each(data, function (i, val) {    // обробка отриманих даних
+                    $.each(data, function (i, val) {  // обробка отриманих даних
                         //$('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" return false;" class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td>'+val['name']+'</td><td>'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
                         if(val['favicon']) {
                             $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'"><img src="admin/icons/'+val['favicon']+'" /> '+val['name']+'</a></td><td class="list_description">'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
