@@ -1,3 +1,17 @@
+<?php
+/**
+ * Created by SoftDeal
+ * http://softdeal.net
+ * autor Kovaliv Volodymyr
+ */
+
+
+
+    include_once('db.class.php');
+    $DB = new DB_CLASS();
+    $result = $DB->getRows('SELECT nazva FROM city');
+    $all_agencies = $DB->getRows('SELECT * FROM tenders');
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -65,12 +79,6 @@
         </div>
     </div>
 </header>
-
-<?php
-    include_once('db.class.php');
-    $DB = new DB_CLASS();
-    $result = $DB->getRows('SELECT nazva FROM city');
- ?>
 <div class="container">
     <div class="row">
         <form class="form-horizontal" role="form" id="ajax_form">
@@ -373,6 +381,9 @@
             </div>
         </div>
     </div>
+
+
+
     <div class="row">
         <div class="col-sm-12">
             <div class="footer_table">
@@ -386,7 +397,27 @@
                     </tr>
                     </thead>
                     <tbody id="data_db">
-
+                    <?php foreach($all_agencies as $val): ?>
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' />
+                        </td>
+                        <td class="list_name">
+                            <a href="company/<?php echo $val['id']; ?>" title="<?php $val['name']; ?>">
+                                <?php if (!empty($val['favicon'])): ?>
+                                    <img src="admin/icons/<?php echo $val['favicon']; ?>" />&nbsp;
+                                <?php endif; ?>
+                                <?php echo $val['name']; ?>
+                            </a>
+                        </td>
+                        <td class="list_description">
+                            <?php echo $val['description'];?>
+                        </td>
+                        <td>
+                            <?php echo $val['geography_chapter']; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
                     </tbody>
                 </table>
                 <input type="hidden" name="count" id="count" value="" />
@@ -460,9 +491,8 @@
                     o[this.name] = this.value || '';
                 }
             });
-            return o;
+            return 0;
         };
-
         var strategy = document.querySelector('#complex_strategy');
         var ind = document.querySelector('#individual_services');
         strategy.onclick = function() {
@@ -477,7 +507,6 @@
                 // $('input.inserv').prop('checked', true);
             }
         }
-
         $('#ajax_form').on('change', function(){
             $(".message").remove();
             var radio_button_value;
@@ -492,7 +521,7 @@
                 dataType : "json",            // Тип даних для відправки
                 success: function (data) {    // свій обробник success
                     $('#data_db').after().empty();
-                   2323233 $.each(data, function (i, val) {  // обробка отриманих даних
+                    $.each(data, function (i, val) {  // обробка отриманих даних
                         //$('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" return false;" class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td>'+val['name']+'</td><td>'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
                         if(val['favicon']) {
                             $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'"><img src="admin/icons/'+val['favicon']+'" /> '+val['name']+'</a></td><td class="list_description">'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
@@ -508,7 +537,6 @@
     });
 
 </script>
-
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
@@ -538,6 +566,7 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/34775450" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
+
 
 </body>
 </html>
