@@ -2,11 +2,7 @@
 /**
  * Created by SoftDeal
  * http://softdeal.net
- * autor Kovaliv Volodymyr
  */
-
-
-
     include_once('db.class.php');
     $DB = new DB_CLASS();
     $result = $DB->getRows('SELECT nazva FROM city');
@@ -64,6 +60,7 @@
                     <h1 class="hidden">Все агентства РФ</h1>
                 </div>
             </div>
+            
             <div class="col-sm-2">
                 <div class="megaphone">
                     <img src="img/megaphone.png" alt="megaphone-icon">
@@ -77,6 +74,10 @@
                 </div>
             </div>
         </div>
+        <div class="text-justify">Ищете рекламное агентство для интернет-продвижения? Выберите город, бюджет проекта и необходимые услуги и
+         мы предоставим список рекламных агентств, удовлетворяющих вашему запросу. Заполните контактные данные и отправьте заявку соазу во 
+         все агентсва! На данный момент в вписке 160 агентств. Больше всего из Москвы. Наиболее популярные услуги: SEO и контекстная реклама.
+         Если вам нужны другие услуги, лучше оставить широкую географию, искать все агентсва РФ.</div>
     </div>
 </header>
 <div class="container">
@@ -91,7 +92,7 @@
                         <div class="col-sm-8">
                             <select class="form-control" name="geography_chapter">
                                 <option selected disabled>Выберите географию</option>
-                                <option value="russian"selected>Все агентства РФ</option>
+                                <option value="russian" selected>Все агентства РФ</option>
                                 <?php foreach($result as $city){ ?>
                                     <option value="<?php echo $city['nazva']; ?>"><?php echo $city['nazva']; ?></option>
                                 <?php } ?>
@@ -381,9 +382,6 @@
             </div>
         </div>
     </div>
-
-
-
     <div class="row">
         <div class="col-sm-12">
             <div class="footer_table">
@@ -397,13 +395,9 @@
                     </tr>
                     </thead>
                     <tbody id="data_db">
-                    <?php foreach($all_agencies as $val): ?>
+                <?php foreach($all_agencies as $val): $i++; ?>
                     <tr>
-                        <td>
-
-                            <input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' />
-                            
-                        </td>
+                        <td><input type="checkbox" name="checklist" class="check_platform" /></td>
                         <td class="list_name">
                             <a href="company/<?php echo $val['id']; ?>" title="<?php $val['name']; ?>">
                                 <?php if (!empty($val['favicon'])): ?>
@@ -419,7 +413,7 @@
                             <?php echo $val['geography_chapter']; ?>
                         </td>
                     </tr>
-                    <?php endforeach; ?>
+                <?php endforeach; ?>
                     </tbody>
                 </table>
                 <input type="hidden" name="count" id="count" value="" />
@@ -429,6 +423,14 @@
     </form>
 </div>
 </div>
+<div class="text-center social_footer">
+    <ul class="list-inline">
+        <li><a href="http://все-агентства.рф/блог/" target="_blank">Блог</a></li>
+        <li><a href="http://все-агентства.рф/блог/2016/03/10/дисклаймер/" target="_blank">Дисклаймер</a></li>
+        <li><a href="https://www.facebook.com/allagency.rf/" target="_blank">Facebook</a></li>
+    </ul>
+</div>
+
 <script type="text/javascript">
 // SoftDeal.net
     $('#ajax_form').validator().on('submit', function (e) {
@@ -537,8 +539,8 @@
             });
         });
     });
-
 </script>
+
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {

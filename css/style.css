@@ -609,3 +609,19 @@ td.list_description {
     font-size: 15px;
 	color: #333;
 }
+.social_footer {
+    padding: 15px;
+    border-top: 1px solid #fff;
+}
+.social_footer ul li{
+    border-right: 1px solid #fff;
+}
+.social_footer ul{
+    margin: 0;
+}
+.social_footer ul li a{
+   color: #fff;
+}
+.social_footer ul li:first-child{
+    border-left: 1px solid #fff;
+}

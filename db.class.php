@@ -9,7 +9,7 @@
 class DB_CLASS
 {
     private $host = 'localhost';
-    private $db_name = 'tender_org';
+    private $db_name = 'vseagenstva';
     private $db_user = 'root';
     private $db_pass = '';
 
