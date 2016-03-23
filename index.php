@@ -400,7 +400,9 @@
                     <?php foreach($all_agencies as $val): ?>
                     <tr>
                         <td>
+
                             <input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' />
+                            
                         </td>
                         <td class="list_name">
                             <a href="company/<?php echo $val['id']; ?>" title="<?php $val['name']; ?>">
