@@ -495,7 +495,7 @@
                     o[this.name] = this.value || '';
                 }
             });
-            return 0;
+            return o;
         };
         var strategy = document.querySelector('#complex_strategy');
         var ind = document.querySelector('#individual_services');
