@@ -397,7 +397,9 @@
                     <tbody id="data_db">
                 <?php foreach($all_agencies as $val): $i++; ?>
                     <tr>
-                        <td><input type="checkbox" name="checklist" class="check_platform" /></td>
+                        <td>
+                            <input type="checkbox" name="checklist" checked class="check_platform" id="check<? echo $i ?>" data-id="<? echo $val['id'] ?>" />
+                        </td>
                         <td class="list_name">
                             <a href="company/<?php echo $val['id']; ?>" title="<?php $val['name']; ?>">
                                 <?php if (!empty($val['favicon'])): ?>
