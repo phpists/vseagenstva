@@ -625,3 +625,15 @@ td.list_description {
 .social_footer ul li:first-child{
     border-left: 1px solid #fff;
 }
+.productRate{
+    position: relative;
+    max-width: 122px;
+}
+.top_stars_yelow{
+    position: absolute;
+    top: 0;
+    left: -3px;
+    width: 0;
+    overflow: hidden;
+    background: #E6E6FF;
+}

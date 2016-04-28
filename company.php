@@ -44,12 +44,12 @@ if (isset($_GET['cname'])) {
     $data['map1'] = $result[0]['map1'];
     $data['adress'] = $result[0]['adress'];
     $data['tel'] = $result[0]['tel'];
+    $data['rating'] = ($result[0]['rating'] > 20) ? 100 : (int)$result[0]['rating']*5;
 
     /**
      * REVIEWS
      */
     $reviews_result = $DB->getRows("SELECT id_company, name, time_send, rating, review, ip_adress FROM reviews WHERE id_company='" . $id . "'");
-    $rating = $DB->calculationRating($reviews_result);
 }
 ?>
 <!DOCTYPE html>
@@ -118,8 +118,6 @@ if (isset($_GET['cname'])) {
 
 <div class="container">
     <div class="company">
-
-        <!--<div id="fb-root"></div>-->
         <div id="login_facebook" class="fb-login-button" data-max-rows="1" data-size="icon" data-show-faces="false" data-auto-logout-link="false"></div>
         <div class="row block_top">
             <div class="col-sm-3" style="border-right: 2px solid #9B9BC2">
@@ -136,10 +134,11 @@ if (isset($_GET['cname'])) {
                 <div class="company_name">
                     <h3><?php echo $data['name']; ?> рекламное агенство</h3>
 
-                    <div class="productRate">
-                        <div style="<?php if ($rating) {
-                            echo 'width:' . $rating . '%;';
-                        } ?>"></div>
+                    <div class="productRate" title="<?php if ($data['rating']) echo $data['rating'] . '%'; ?>">
+                        <img src="../img/top-stars2.png" alt="">
+                        <div class="top_stars_yelow" style="<?php if ($data['rating']) echo 'width:' . $data['rating'] . '%;'; ?>">
+                            <img src="../img/top-stars.png" alt="">
+                        </div>
                     </div>
                     <div class="raiting">
                         <div class="city">
@@ -389,13 +388,7 @@ var name = '<? echo $_SESSION['user_name']; ?>';
             }
         });
     }
-
-
-
 </script>
-
-
-
 <div id="ajaxpro-overlay" class="ajaxpro-overlay" style="opacity: 0.8; display: none;"></div>
 <!-- dialog 1 -->
 <div id="ajaxpro-notice-form" class="ajaxpro-form" style="opacity: 0.95; display: none;">

@@ -6,7 +6,15 @@
     include_once('db.class.php');
     $DB = new DB_CLASS();
     $result = $DB->getRows('SELECT nazva FROM city');
-    $all_agencies = $DB->getRows('SELECT * FROM tenders');
+    $reviews_result = $DB->getRows("SELECT * FROM reviews");
+    $average_rating = $rating = array();
+    foreach($reviews_result as $value){
+        $rating['sum_rating'][$value['id_company']] += $value['rating'];
+        $rating['count'][$value['id_company']]++;
+        $average_rating['rating_company'][$value['id_company']] = $rating['sum_rating'][$value['id_company']]/$rating['count'][$value['id_company']];
+        $rating['rating_company'][$value['id_company']] = $average_rating['rating_company'][$value['id_company']]*(5-(5/pow($rating['count'][$value['id_company']], 0.2)));
+    }
+    $all_agencies = $DB->getRows('SELECT * FROM tenders t ORDER BY t.rating DESC');
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -572,7 +580,5 @@
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/34775450" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-
-
 </body>
 </html>

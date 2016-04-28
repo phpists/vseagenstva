@@ -12,8 +12,7 @@ class DB_CLASS
     private $db_name = 'vseagenstva';
     private $db_user = 'root';
     private $db_pass = '';
-
-    private $DB;
+	private $DB;
 
     public  function __construct() {
             $this->newConnection($this->host, $this->db_name, $this->db_user, $this->db_pass, array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
@@ -96,23 +95,44 @@ class DB_CLASS
     }
 
     /**
-     * Ğàõóºìî ğåéòèíã
-     * @param $reviews - â³äãóêè(array)
+     * Îáíîâëÿºìî äàí³
+     * $table - òàáëèöÿ â ÿêó çàïèñóºìî (string)
+     * $values (array)
+     * $where (array or string)
      */
-    public function calculationRating($reviews){
-        $count = $average_value = 0;
-        foreach($reviews as $review){
-            $count++;
-            $average_value += (int)$review['rating'];
+    public function updateRow($table, $values = array(), $where)
+    {
+        try {
+            $WHERE = $SET = '';
+            $j = $i = 0;
+            foreach ($values as $field => $val){
+                $i++;
+                if (count($values) != $i)
+                    $SET .= $field . "='" . $val . "', ";
+                else
+                    $SET .= $field . "='" . $val . "'";
+            }
+            if (is_array($where)) {
+                foreach ($where as $field => $val) {
+                    $j++;
+                    if (count($where) != $j)
+                        $WHERE .= $field . "='" . $val . "' AND ";
+                    else
+                        $WHERE .= $field . "='" . $val . "'";
+                }
+            } elseif (is_string($where)){
+                $WHERE = $where;
+            }
+            $sql = "UPDATE $table SET $SET WHERE $WHERE";
+            $stm = $this->DB->prepare($sql);
+            foreach ($values as $f => $v) {
+                $stm->bindValue(':' . $f, $v);
+            }
+            $stm->execute();
+            return true;
         }
-        if ($count == 0) return false;
-        $average_value = $average_value/$count;
-        $rating = $average_value*(5-(5/pow($count, 0.2)));
-        if ($rating > 20) {
-            $rating = 100;
-        } else {
-            $rating = (int)($rating*5);
+        catch(PDOException $e) {
+            echo $e->getMessage();
         }
-        return $rating;
     }
 }

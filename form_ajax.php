@@ -5,12 +5,8 @@
  * Date: 25.12.2015
  * Time: 16:06
  */
-
-
-
 include_once('db.class.php');
 $DB = new DB_CLASS();
-/*$DB->getRow('SELECT * FROM tenders');*/
 $sql = '';
 $sql .= 'SELECT * FROM tenders ';
 if ($_POST) {
@@ -142,6 +138,8 @@ if ($_POST) {
                         echo json_encode('error_city');
                 }
         }
-        echo json_encode($DB->getRows($sql));
+        $sql .= ' ORDER BY rating DESC';
+        $all_agencies = $DB->getRows($sql);
+        echo json_encode($all_agencies);
 }
 ?>
