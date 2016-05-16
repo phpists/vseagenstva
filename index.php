@@ -15,6 +15,16 @@
         $rating['rating_company'][$value['id_company']] = $average_rating['rating_company'][$value['id_company']]*(5-(5/pow($rating['count'][$value['id_company']], 0.2)));
     }
     $all_agencies = $DB->getRows('SELECT * FROM tenders t ORDER BY t.rating DESC');
+
+
+    function mbCutString($str, $length, $postfix='...', $encoding='UTF-8') {
+        if (mb_strlen($str, $encoding) <= $length) {
+            return $str;
+        }
+        $tmp = mb_substr($str, 0, $length, $encoding);
+        return mb_substr($tmp, 0, mb_strripos($tmp, ' ', 0, $encoding), $encoding) . $postfix;
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -380,7 +390,7 @@
     <div class="row">
         <div class="col-sm-9 padding_right">
             <div class="bottom_banner">
-                Под ваши критерии подходят <span id="text-count" class="text_yellow">0</span> рекламных агенств <br> Мы отправим заявку
+                Под ваши критерии подходят <span id="text-count" class="text_yellow"><? echo count($all_agencies) ?></span> рекламных агенств <br> Мы отправим заявку
                 во все
             </div>
         </div>
@@ -417,7 +427,7 @@
                             </a>
                         </td>
                         <td class="list_description">
-                            <?php echo $val['description'];?>
+                            <?php echo mbCutString($val['description'], 250, $postfix='...'); ?>
                         </td>
                         <td>
                             <?php echo $val['geography_chapter']; ?>
@@ -538,9 +548,9 @@
                     $.each(data, function (i, val) {  // обробка отриманих даних
                         //$('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" return false;" class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td>'+val['name']+'</td><td>'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
                         if(val['favicon']) {
-                            $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'"><img src="admin/icons/'+val['favicon']+'" /> '+val['name']+'</a></td><td class="list_description">'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
+                            $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'"><img src="admin/icons/'+val['favicon']+'" /> '+val['name']+'</a></td><td class="list_description">'+ val['description'].substr(0, 250) +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
                         } else {
-                            $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'">'+val['name']+'</a></td><td class="list_description">'+ val['description'] +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
+                            $('#data_db').after().append('<tr><td><input type="checkbox" name="checklist" checked class="check_platform" id="check'+ i +'" data-id='+ val['id'] +' /></td><td class="list_name"><a href="company/'+ val['id'] +'" title="'+val['name']+'">'+val['name']+'</a></td><td class="list_description">'+ val['description'].substr(0, 250) +'</td><td>'+ val['geography_chapter'] +'</td></tr>');
                         }
                     });
                     $('#count').val(data.length);

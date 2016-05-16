@@ -2,7 +2,6 @@
 /**
  * Created by SoftDeal
  * http://softdeal.net
- * autor Ковалів Володимир
  */
     include_once('db.class.php');
     $DB = new DB_CLASS();

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: test
- * Date: 25.12.2015
- * Time: 16:06
- */
 include_once('db.class.php');
 $DB = new DB_CLASS();
 $sql = '';
